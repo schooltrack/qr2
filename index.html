@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام المسار المدرسي | School Track System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Inter:wght@400;700;900&display=swap');
+        
+        :root {
+            --primary: #0f172a; 
+            --accent: #f59e0b;  
+            --secondary: #3b82f6; 
+        }
+
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background: #ffffff; 
+            color: #1e293b;
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+        }
+        .en-mode { font-family: 'Inter', sans-serif; }
+
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        #welcomeModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        #welcomeModal.show { display: flex; opacity: 1; }
+        #welcomeModal.show .modal-content { transform: scale(1); }
+
+        .premium-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .premium-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.15);
+            border-color: var(--secondary);
+        }
+
+        .shimmer-text {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #f59e0b 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcomeModal">
+        <div class="modal-content">
+            <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                <i class="fas fa-hand-sparkles"></i>
+            </div>
+            <h2 class="text-3xl font-black text-slate-900 mb-4" data-key="modalT">أهلاً وسهلاً بك</h2>
+            <p class="text-slate-600 text-lg mb-8 leading-relaxed" data-key="modalD">مرحباً بك في نظام المسار المدرسي - وجهتك الأولى للتحول الرقمي التعليمي.</p>
+            <button onclick="closeModal()" class="w-full btn-gold py-4 rounded-2xl font-black text-lg hover:scale-105 transition" data-key="modalBtn">ابدأ الاستكشاف</button>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-[100] bg-white/80 backdrop-blur-xl border-b border-slate-200/50 h-20 flex items-center">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="Logo" class="w-14 h-14 object-contain">
+                <span class="text-2xl font-black text-slate-900 tracking-tighter" data-key="logo">المسار المدرسي</span>
+            </div>
+            
+            <div class="flex items-center gap-8">
+                <div class="hidden lg:flex gap-10 font-bold text-slate-500 uppercase text-sm tracking-widest">
+                    <a href="#about" class="hover:text-blue-600 transition" data-key="navAbout">عن النظام</a>
+                    <a href="#features" class="hover:text-blue-600 transition" data-key="navFeatures">المميزات</a>
+                    <a href="#contact" class="hover:text-blue-600 transition" data-key="navContact">تواصل معنا</a>
+                </div>
+                <button onclick="toggleLanguage()" class="flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-blue-600 transition-all shadow-lg">
+                    <i class="fas fa-language text-xl"></i>
+                    <span id="langBtnText">English</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="about" class="pt-48 pb-24 px-6 hero-gradient relative">
+        <div class="container mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div data-aos="fade-left">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-bold text-xs mb-8 border border-blue-100 uppercase tracking-widest" data-key="heroBadge">
+                    نظام الإدارة الذكية المتكاملة - إصدار 2026
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black text-slate-900 mb-8 leading-[1.1]">
+                    <span data-key="heroT1">ثورة في إدارة</span> <br> 
+                    <span class="shimmer-text" data-key="heroT2">المؤسسات التعليمية</span>
+                </h1>
+                <p class="text-xl text-slate-600 leading-relaxed mb-10 max-w-xl" data-key="heroDesc">
+                    نظام "المسار المدرسي" هو محرك ذكاء اصطناعي مصمم لرفع كفاءة المؤسسات التعليمية بنسبة 300%. يدمج بين المحاسبة المالية الدقيقة والتحكم الأكاديمي الصارم.
+                </p>
+                <div class="flex flex-wrap gap-5">
+                    <a href="#features" class="btn-gold px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition" data-key="heroBtn">تعرف على الإمكانيات</a>
+                </div>
+            </div>
+            <div class="relative" data-aos="zoom-in-right">
+                <img src="2025.jpg" alt="School Image" class="rounded-[4rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] border-[12px] border-white relative z-10">
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-32 bg-white px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-24" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6" data-key="featHead">تفاصيل تجعلنا في الصدارة</h2>
+                <div class="w-24 h-2 bg-blue-600 mx-auto rounded-full"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="premium-card p-10 group" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6" data-key="f1T">المنظومة المالية والمحاسبية</h3>
+                    <p class="text-slate-500 leading-relaxed" data-key="f1D">إدارة الدورة المحاسبية الكاملة وجدولة الرسوم آلياً مع تنبيهات ذكية للمتأخرات عبر الـ SMS.</p>
+                </div>
+
+                <div class="premium-card p-10 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:bg-amber-600 group-hover:text-white transition-all duration-500">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6" data-key="f2T">السيادة الأكاديمية والكنترول</h3>
+                    <p class="text-slate-500 leading-relaxed" data-key="f2D">كنترول آلي مشفر تماماً يمنع التلاعب بالدرجات ويصدر الشهادات بمعايير الوزارة الرسمية.</p>
+                </div>
+
+                <div class="premium-card p-10 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500">
+                        <i class="fas fa-mobile-screen"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6" data-key="f3T">الربط الرقمي الشامل</h3>
+                    <p class="text-slate-500 leading-relaxed" data-key="f3D">تطبيق ولي الأمر لمتابعة الغياب والنتائج، ونظام التحضير الذكي عبر الـ QR Code.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 py-10 text-center text-slate-500 border-t border-slate-900">
+        <p class="font-bold" data-key="footerCopy">© 2026 فريق المسار المدرسي - جامعة الرشيد الذكية - صنعاء.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            document.getElementById('welcomeModal').classList.add('show');
+            AOS.init({ duration: 1000, once: true });
+        });
+
+        function closeModal() {
+            const modal = document.getElementById('welcomeModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 500);
+        }
+
+        const translations = {
+            ar: {
+                modalT: "أهلاً وسهلاً بك",
+                modalD: "مرحباً بك في نظام المسار المدرسي - وجهتك الأولى للتحول الرقمي التعليمي.",
+                modalBtn: "ابدأ الاستكشاف",
+                logo: "المسار المدرسي",
+                navAbout: "عن النظام", navFeatures: "المميزات", navContact: "تواصل معنا",
+                heroBadge: "نظام الإدارة الذكية المتكاملة - إصدار 2026",
+                heroT1: "ثورة في إدارة", heroT2: "المؤسسات التعليمية",
+                heroDesc: "نظام 'المسار المدرسي' هو محرك ذكاء اصطناعي مصمم لرفع كفاءة المؤسسات التعليمية بنسبة 300%. يدمج بين المحاسبة المالية الدقيقة والتحكم الأكاديمي الصارم.",
+                heroBtn: "تعرف على الإمكانيات",
+                featHead: "تفاصيل تجعلنا في الصدارة",
+                f1T: "المنظومة المالية والمحاسبية", f1D: "إدارة الدورة المحاسبية الكاملة وجدولة الرسوم آلياً مع تنبيهات ذكية للمتأخرات عبر الـ SMS.",
+                f2T: "السيادة الأكاديمية والكنترول", f2D: "كنترول آلي مشفر تماماً يمنع التلاعب بالدرجات ويصدر الشهادات بمعايير الوزارة الرسمية.",
+                f3T: "الربط الرقمي الشامل", f3D: "تطبيق ولي الأمر لمتابعة الغياب والنتائج، ونظام التحضير الذكي عبر الـ QR Code.",
+                footerCopy: "© 2026 فريق المسار المدرسي - جامعة الرشيد الذكية - صنعاء."
+            },
+            en: {
+                modalT: "Welcome!",
+                modalD: "Welcome to School Track - Your first destination for educational digital transformation.",
+                modalBtn: "Start Exploring",
+                logo: "School Track",
+                navAbout: "About Us", navFeatures: "Features", navContact: "Contact",
+                heroBadge: "Smart Management System - 2026 Edition",
+                heroT1: "Revolutionizing", heroT2: "School Management",
+                heroDesc: "School Track is an AI-driven engine designed to boost efficiency by 300%, merging precise accounting with strict academic control.",
+                heroBtn: "View Capabilities",
+                featHead: "Features That Set Us Apart",
+                f1T: "Financial & Accounting", f1D: "Complete accounting cycle management and automated fee scheduling with SMS alerts.",
+                f2T: "Academic Sovereignty", f2D: "Fully encrypted automated control system preventing grade manipulation and issuing certificates.",
+                f3T: "Digital Connectivity", f3D: "Parent App for tracking attendance and results, plus smart QR Code check-in.",
+                footerCopy: "© 2026 School Track Team - Al-Rasheed Smart University - Sana'a."
+            }
+        };
+
+        let currentLang = 'ar';
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const html = document.getElementById('mainHtml');
+            html.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            html.lang = currentLang;
+            document.body.classList.toggle('en-mode');
+            document.getElementById('langBtnText').innerText = currentLang === 'ar' ? 'English' : 'العربية';
+
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[currentLang][key]) {
+                    element.innerText = translations[currentLang][key];
+                }
+            });
+            AOS.refresh();
+        }
+    </script>
+</body>
+</html>
