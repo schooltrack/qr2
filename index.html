@@ -4,348 +4,420 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>School Track | تجربة تعليمية ثورية</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&display=swap');
-        
-        :root {
-            --primary: #00f2fe;
-            --secondary: #4facfe;
-            --accent: #7367f0;
-            --bg-dark: #050505;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
 
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            /* تم إزالة الـ min-width الثابت ليتناسب مع الجوال */
+            background-color: #0f172a;
+            color: #e5e7eb;
+            line-height: 1.8;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        .animated-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #050505, #0a0a1a);
-            z-index: -2;
-        }
-        
-        .blob {
-            position: fixed;
-            width: 300px; height: 300px; /* تصغير الحجم قليلاً للجوال */
-            background: radial-gradient(circle, rgba(115, 103, 240, 0.15) 0%, transparent 70%);
-            filter: blur(80px);
+        /* انميشن الخلفية المتحركة */
+        .bg-animate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
             z-index: -1;
+        }
+        .blob {
+            position: absolute; width: 300px; height: 300px;
+            background: linear-gradient(#38bdf8, #7367f0);
+            filter: blur(80px); border-radius: 50%; opacity: 0.15;
             animation: move 20s infinite alternate;
         }
-
         @keyframes move {
             from { transform: translate(-10%, -10%); }
-            to { transform: translate(20%, 20%); }
+            to { transform: translate(100%, 80%); }
+        }
+
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to left, #38bdf8, #7367f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+        
+        .card:hover { 
+            transform: translateY(-15px) scale(1.02); 
+            border-color: #38bdf8;
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-glow {
+            background: #38bdf8;
+            color: #020617;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 900;
+            display: inline-block;
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
         }
 
         #welcomeModal {
             display: none; position: fixed; inset: 0; z-index: 10000;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(25px);
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
             align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.5s ease;
         }
 
-        .modal-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid rgba(0, 242, 254, 0.3);
-            border-radius: 2rem; /* تقليل الحواف للموبايل */
-            padding: 2rem;
-            text-align: center;
-            transform: scale(0.9);
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        .team-img-placeholder {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            border: 3px solid #38bdf8;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            transition: 0.5s;
         }
+        .card:hover .team-img-placeholder { transform: rotateY(360deg); }
 
-        @keyframes popIn { to { transform: scale(1); opacity: 1; } }
+        section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 10px; color: #fff; }
 
-        .premium-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2rem;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-        }
+        /* تنسيق الجداول */
+        .custom-table-container { overflow-x: auto; margin-top: 20px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.1); }
+        table { width: 100%; border-collapse: collapse; background: rgba(2, 6, 23, 0.5); }
+        th, td { padding: 15px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        th { background: rgba(56, 189, 248, 0.1); color: #38bdf8; font-weight: bold; }
+        tr:last-child td { border: none; }
+        .highlight { color: #38bdf8; font-weight: 900; }
 
-        .premium-card:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
-            transform: translateY(-10px) scale(1.01);
-        }
-
-        .text-gradient {
-            background: linear-gradient(to left, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .btn-glow {
-            background: linear-gradient(45deg, var(--accent), var(--secondary));
-            padding: 1rem 2.5rem;
-            border-radius: 1.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(115, 103, 240, 0.4);
-            transition: 0.4s;
-        }
-
-        .nav-glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* تحويل الشبكة لتصبح عمود واحد في الجوال وتلقائية في الشاشات الكبيرة */
-        .force-row, .force-row-3, .force-row-4 {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-            gap: 20px !important;
-        }
-
-        @media (min-width: 1024px) {
-            .force-row { grid-template-columns: repeat(2, 1fr) !important; }
-            .force-row-3 { grid-template-columns: repeat(3, 1fr) !important; }
-            .force-row-4 { grid-template-columns: repeat(4, 1fr) !important; }
+        @media (max-width: 768px) {
+            .section-title h2 { font-size: 1.8rem; }
+            section { padding: 50px 20px; }
+            header h1 { font-size: 2.2rem !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="animated-bg"></div>
-    <div class="blob"></div>
+    <div class="bg-animate">
+        <div class="blob"></div>
+        <div class="blob" style="animation-delay: -5s; left: 60%;"></div>
+    </div>
 
     <div id="welcomeModal">
-        <div class="modal-card max-w-lg mx-4">
-            <div class="relative inline-block mb-8">
-                <div class="absolute -inset-4 bg-cyan-500/20 blur-2xl rounded-full animate-pulse"></div>
-                <img src="logo1.jpg" class="relative w-20 h-20 object-contain">
-            </div>
-            <h2 id="mTitle" class="text-3xl font-black mb-4 text-gradient">مرحباً بك في المستقبل</h2>
-            <p id="mDesc" class="text-gray-400 mb-10 leading-loose">نظام School Track ليس مجرد تطبيق، بل هو شريكك الذكي لبناء غدٍ تعليمي أفضل.</p>
-            <button onclick="closeModal()" class="btn-glow w-full">استكشف النظام الآن</button>
+        <div class="card max-w-md mx-4" style="background: #1e293b;">
+            <img src="logo1.jpg" class="w-20 h-20 mx-auto mb-6 rounded-full border-2 border-sky-400">
+            <h2 id="mTitle" class="text-2xl font-black mb-4">مرحباً بك في المستقبل</h2>
+            <p id="mDesc" class="text-gray-400 mb-8">نظام School Track هو شريكك الذكي لبناء غدٍ تعليمي أفضل وتجسير الفجوة بين المدرسة والمنزل.</p>
+            <button onclick="closeModal()" class="btn-glow w-full">استكشف النظام</button>
         </div>
     </div>
 
-    <nav class="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[100] nav-glass rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-4">
-        <div class="flex justify-between items-center px-2 md:px-6">
-            <div class="flex items-center gap-2 md:gap-4">
-                <img src="logo1.jpg" class="w-8 h-8 hover:rotate-[360deg] transition-transform duration-1000">
-                <span class="font-black text-sm md:text-lg tracking-tighter">SCHOOL <span class="text-cyan-400">TRACK</span></span>
+    <nav class="fixed top-0 left-0 w-full z-[100] bg-[#0f172a]/80 backdrop-blur-md border-b border-white/5 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+            <div class="flex items-center gap-3">
+                <img src="logo1.jpg" class="w-10 h-10 rounded-lg">
+                <span class="font-black text-xl tracking-tighter">SCHOOL <span class="text-sky-400">TRACK</span></span>
             </div>
-            <div class="flex gap-3 md:gap-8 items-center">
-                <a href="#about" class="hidden md:block hover:text-cyan-400 transition-colors font-bold text-xs uppercase">من نحن</a>
-                <button onclick="toggleLang()" id="langBtn" class="bg-white/10 px-3 py-1 md:px-4 md:py-2 rounded-xl text-[10px] font-black border border-white/10">EN</button>
-            </div>
+            <button onclick="toggleLang()" id="langBtn" class="bg-sky-500/10 px-4 py-1 rounded-full text-xs font-bold border border-sky-500/20">EN</button>
         </div>
     </nav>
 
-    <section id="about" class="pt-32 md:pt-52 pb-12 md:pb-24 px-6 max-w-7xl mx-auto">
-        <div class="force-row gap-10 md:gap-16 items-center">
-            <div data-aos="fade-up">
-                <span class="text-cyan-400 font-black text-[10px] tracking-[0.3em] uppercase mb-4 block">The Future of Education</span>
-                <h1 id="hTitle" class="text-4xl md:text-7xl font-black mb-8 leading-tight">مسار المدرسة<br><span class="text-gradient">School Track</span></h1>
-                <p id="hSlogan" class="text-lg md:text-2xl text-gray-400 mb-10 font-light leading-relaxed">بوابتكم الذكية لمستقبل تعليمي رقمي متكامل.</p>
-                <div class="premium-card p-6 md:p-10 group">
-                    <h3 id="aTitle" class="text-xl md:text-2xl font-black mb-6 flex items-center gap-3">
-                        <span class="w-8 h-1 bg-cyan-400 inline-block"></span> من نحن؟
-                    </h3>
-                    <p id="aFull" class="text-gray-400 leading-loose text-md md:text-lg">"مسار المدرسة" هو منصة رقمية مبتكرة تهدف إلى رقمنة الإدارة المدرسية في اليمن، عبر تحويل العمليات اليدوية التقليدية إلى نظام ذكي يربط المدرسة والمدرس وولي الأمر في بيئة واحدة متقدمة وآمنة.</p>
-                </div>
-            </div>
-            <div class="relative mt-10 md:mt-0" data-aos="zoom-in-up" data-aos-delay="200">
-                <div class="absolute -inset-10 bg-cyan-500/10 blur-[100px] rounded-full"></div>
-                <img src="23.webp" class="relative rounded-[2rem] md:rounded-[4rem] border border-white/10 shadow-3xl w-full h-auto">
+    <header>
+        <div data-aos="zoom-out" class="px-4">
+            <h1 id="hTitle" class="text-4xl md:text-7xl font-black mb-6">مسار المدرسة<br><span class="text-gradient">School Track</span></h1>
+            <p id="hSlogan" class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 italic">"نحو بيئة تعليمية ذكية، مترابطة، وآمنة تعزز من كفاءة الأجيال القادمة وتدعم مسيرة التحول الرقمي."</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#about" class="btn-glow">تفاصيل المشروع</a>
             </div>
         </div>
-    </section>
+    </header>
 
-    <section id="why" class="py-12 md:py-24 px-6 max-w-7xl mx-auto">
-        <div class="force-row gap-10">
-            <div class="premium-card p-8 md:p-12 border-red-500/20 group" data-aos="fade-up">
-                <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-exclamation-triangle text-xl text-red-500"></i>
-                </div>
-                <h2 id="wTitle1" class="text-2xl font-black mb-6">التحديات الحالية</h2>
-                <p id="wDesc1" class="text-gray-400 text-sm md:text-base leading-relaxed">نعاني من صعوبة وصول أولياء الأمور للمعلومات في الوقت المناسب، فجوة كبيرة في التواصل، وتراكم السجلات الورقية الذي يؤدي للأخطاء البشرية وفقدان البيانات الهامة.</p>
-            </div>
-            <div class="premium-card p-8 md:p-12 border-cyan-500/20 group" data-aos="fade-up" data-aos-delay="100">
-                <div class="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-rocket text-xl text-cyan-400"></i>
-                </div>
-                <h2 id="wTitle2" class="text-2xl font-black mb-6">حلولنا الذكية</h2>
-                <p id="wDesc2" class="text-gray-400 text-sm md:text-base leading-relaxed">نوفر نظاماً سحابياً مركزياً يتيح الشفافية المطلقة والتواصل اللحظي عبر الإشعارات، مما يحول المدرسة إلى مؤسسة ذكية تدار إلكترونياً بالكامل وبكفاءة تفوق الأنظمة التقليدية.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="roles" class="py-12 md:py-24 px-6 max-w-7xl mx-auto">
-        <h2 id="rolesTitle" class="text-center text-3xl md:text-5xl font-black mb-12 md:20">عالم من <span class="text-gradient">الإمكانيات</span></h2>
-        <div class="force-row-4 gap-6">
-            <div class="premium-card p-6 md:p-8 text-center" data-aos="fade-up">
-                <div class="text-3xl mb-4 text-cyan-400"><i class="fas fa-building-columns"></i></div>
-                <h4 id="r1T" class="font-black text-lg mb-4">إدارة المدرسة</h4>
-                <p id="r1D" class="text-xs text-gray-500 leading-loose">تحكم كامل في القبول والتسجيل، استخراج التقارير المالية والإحصائية، ومتابعة أداء الطاقم التعليمي بضغطة زر واحدة.</p>
-            </div>
-            <div class="premium-card p-6 md:p-8 text-center" data-aos="fade-up" data-aos-delay="100">
-                <div class="text-3xl mb-4 text-indigo-400"><i class="fas fa-chalkboard-user"></i></div>
-                <h4 id="r2T" class="font-black text-lg mb-4">المعلم</h4>
-                <p id="r2D" class="text-xs text-gray-500 leading-loose">رصد آلي للدرجات، تحضير الدروس والخطط رقمياً، وإدارة الغياب اليومي والحصص دون الحاجة لاستخدام الأوراق.</p>
-            </div>
-            <div class="premium-card p-6 md:p-8 text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl mb-4 text-purple-400"><i class="fas fa-user-graduate"></i></div>
-                <h4 id="r3T" class="font-black text-lg mb-4">الطالب</h4>
-                <p id="r3D" class="text-xs text-gray-500 leading-loose">الوصول الفوري للواجبات والنتائج، جدول الحصص اليومي، وتقييم الأداء الشخصي بشكل تفاعلي.</p>
-            </div>
-            <div class="premium-card p-6 md:p-8 text-center" data-aos="fade-up" data-aos-delay="300">
-                <div class="text-3xl mb-4 text-pink-400"><i class="fas fa-users-viewfinder"></i></div>
-                <h4 id="r4T" class="font-black text-lg mb-4">ولي الأمر</h4>
-                <p id="r4D" class="text-xs text-gray-500 leading-loose">مراقبة دقيقة لمستقبل الأبناء، تواصل مباشر مع المعلمين، وتلقي إشعارات فورية عن الغياب أو السلوك.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="team" class="py-12 md:py-24 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-12 md:mb-20" data-aos="fade-up">
-            <h2 id="teamTitle" class="text-3xl md:text-5xl font-black mb-4">فريق <span class="text-gradient">التطوير</span></h2>
-            <p class="text-gray-500 font-bold text-xs md:text-sm tracking-widest uppercase">Graduation Project – Dept. of IT (2025)</p>
-        </div>
-        <div class="force-row-3 gap-6">
-            <div class="premium-card p-6 text-center" data-aos="zoom-in">
-                <div class="relative w-20 h-20 mx-auto mb-4">
-                    <div class="absolute -inset-2 bg-cyan-500/20 blur-xl rounded-full"></div>
-                    <div class="relative w-full h-full bg-bg-dark border-2 border-cyan-400 rounded-full flex items-center justify-center">
-                        <i class="fa-solid fa-user text-2xl text-cyan-400"></i>
-                    </div>
-                </div>
-                <h4 class="font-black text-md">Alaa Ahmed Al‑Sayani</h4>
-                <span class="text-cyan-400 font-mono text-xs">202210101229</span>
-            </div>
-            <div class="premium-card p-6 text-center" data-aos="zoom-in">
-                <div class="relative w-20 h-20 mx-auto mb-4">
-                    <div class="absolute -inset-2 bg-cyan-500/20 blur-xl rounded-full"></div>
-                    <div class="relative w-full h-full bg-bg-dark border-2 border-cyan-400 rounded-full flex items-center justify-center">
-                        <i class="fa-solid fa-user text-2xl text-cyan-400"></i>
-                    </div>
-                </div>
-                <h4 class="font-black text-md">Mohammed Khalid Al‑Twile</h4>
-                <span class="text-cyan-400 font-mono text-xs">202110100520</span>
-            </div>
-            <div class="premium-card p-6 text-center" data-aos="zoom-in">
-                <div class="relative w-20 h-20 mx-auto mb-4">
-                    <div class="absolute -inset-2 bg-cyan-500/20 blur-xl rounded-full"></div>
-                    <div class="relative w-full h-full bg-bg-dark border-2 border-cyan-400 rounded-full flex items-center justify-center">
-                        <i class="fa-solid fa-user text-2xl text-cyan-400"></i>
-                    </div>
-                </div>
-                <h4 class="font-black text-md">Mohammed Labib Al‑Selwi</h4>
-                <span class="text-cyan-400 font-mono text-xs">202210100710</span>
-            </div>
-             <div class="premium-card p-6 text-center" data-aos="zoom-in">
-                <div class="relative w-20 h-20 mx-auto mb-4">
-                    <div class="absolute -inset-2 bg-cyan-500/20 blur-xl rounded-full"></div>
-                    <div class="relative w-full h-full bg-bg-dark border-2 border-cyan-400 rounded-full flex items-center justify-center">
-                        <i class="fa-solid fa-user text-2xl text-cyan-400"></i>
-                    </div>
-                </div>
-                <h4 class="font-black text-md">Moatasem Mutahar Jobarah</h4>
-                <span class="text-cyan-400 font-mono text-xs">202210100731</span>
-            </div>
-            <div class="premium-card p-6 text-center" data-aos="zoom-in">
-                <div class="relative w-20 h-20 mx-auto mb-4">
-                    <div class="absolute -inset-2 bg-cyan-500/20 blur-xl rounded-full"></div>
-                    <div class="relative w-full h-full bg-bg-dark border-2 border-cyan-400 rounded-full flex items-center justify-center">
-                        <i class="fa-solid fa-user text-2xl text-cyan-400"></i>
-                    </div>
-                </div>
-                <h4 class="font-black text-md">Abdul Qadir Jamil Al‑Daais</h4>
-                <span class="text-cyan-400 font-mono text-xs">202210100082</span>
-            </div>
-            <div class="premium-card p-6 text-center" data-aos="zoom-in">
-                <div class="relative w-20 h-20 mx-auto mb-4">
-                    <div class="absolute -inset-2 bg-cyan-500/20 blur-xl rounded-full"></div>
-                    <div class="relative w-full h-full bg-bg-dark border-2 border-cyan-400 rounded-full flex items-center justify-center">
-                        <i class="fa-solid fa-user text-2xl text-cyan-400"></i>
-                    </div>
-                </div>
-                <h4 class="font-black text-md">Husam Mohammed Ghanem</h4>
-                <span class="text-cyan-400 font-mono text-xs">202210100719</span>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-12 md:py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div class="force-row gap-10 items-center">
+    <section id="about">
+        <div class="grid-container items-center gap-12">
             <div data-aos="fade-right">
-                <h4 class="text-2xl md:text-4xl font-black mb-6">لنصنع <span class="text-gradient">التغيير</span> معاً</h4>
-                <p class="text-gray-500 mb-8 text-md md:text-lg">تحت إشراف الخبراء: د. صالح الرياشي & د. براءة</p>
-                <div class="flex gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:border-cyan-400 cursor-pointer"><i class="fab fa-facebook-f"></i></div>
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:border-cyan-400 cursor-pointer"><i class="fab fa-instagram"></i></div>
+                <div class="section-title text-right">
+                    <h2>حول <span>المشروع</span></h2>
                 </div>
+                <p id="aFull" class="text-gray-400 text-lg leading-relaxed mb-6 text-justify">
+                    يعتبر نظام "مسار المدرسة" حلاً تقنياً متكاملاً صُمم خصيصاً لمواجهة التحديات الإدارية والتربوية في المدارس الحديثة. لا يقتصر النظام على أتمتة البيانات فحسب، بل يعمل كجسر تواصل تفاعلي يضمن تدفق المعلومات بدقة وشفافية بين جميع أطراف العملية التعليمية. من خلال واجهات سهلة الاستخدام وقاعدة بيانات سحابية متينة، يوفر النظام بيئة عمل ذكية تقلل من الاعتماد على الأوراق وتزيد من سرعة اتخاذ القرار المبني على تحليل البيانات الحقيقي.
+                </p>
             </div>
-            <div class="space-y-4" data-aos="fade-left">
-                <div class="premium-card p-4 md:p-6 flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-400"><i class="fas fa-phone"></i></div>
-                    <div><p class="text-[8px] uppercase font-bold text-gray-500">Call Us</p><p class="font-black text-sm md:text-lg">776186866</p></div>
-                </div>
-                <div class="premium-card p-4 md:p-6 flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400"><i class="fas fa-envelope"></i></div>
-                    <div><p class="text-[8px] uppercase font-bold text-gray-500">Email Us</p><p class="font-black text-xs md:text-sm">info@schooltrack.ye</p></div>
-                </div>
+            <div data-aos="fade-left" class="relative">
+                <img src="23.webp" class="rounded-3xl shadow-2xl border border-white/10 w-full h-auto">
             </div>
         </div>
-        <p class="text-center mt-12 text-[8px] font-bold text-gray-600 tracking-[0.2em] md:tracking-[0.5em] uppercase">© 2026 SCHOOL TRACK | Smart Educational Revolution</p>
+    </section>
+
+    <section id="tech">
+        <div class="section-title" data-aos="fade-up">
+            <h2 id="techTitle">التقنيات والهيكلية</h2>
+        </div>
+        <div class="grid-container">
+            <div class="card" data-aos="fade-up">
+                <i class="fa-brands fa-flutter text-sky-400 text-4xl mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">Flutter</h4>
+                <p id="t1" class="text-sm text-gray-500">تطبيق هاتف محمول متعدد الأنظمة (Cross-platform).</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-solid fa-database text-indigo-400 text-4xl mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">MySQL</h4>
+                <p id="t2" class="text-sm text-gray-500">إدارة وتخزين البيانات بكفاءة وموثوقية عالية.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fa-solid fa-cloud text-purple-400 text-4xl mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">Cloud</h4>
+                <p id="t3" class="text-sm text-gray-500">بنية تحتية استضافية سحابية آمنة وقابلة للتوسع.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fa-solid fa-shield-halved text-emerald-400 text-4xl mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">Security</h4>
+                <p id="t4" class="text-sm text-gray-500">تشفير AES-256 ونظام تحكم في الصلاحيات (RBAC).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison">
+        <div class="section-title" data-aos="fade-up">
+            <h2 id="compTitle">مقارنة الأنظمة التعليمية</h2>
+        </div>
+        <div class="card" data-aos="zoom-in">
+            <div class="custom-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="c1">النظام (System)</th>
+                            <th id="c2">التقنية (Technology)</th>
+                            <th id="c3">الملائمة (Suitability)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>e-School</td>
+                            <td>Web</td>
+                            <td id="s1">عالية (High)</td>
+                        </tr>
+                        <tr>
+                            <td>Smart School</td>
+                            <td>Advanced Web</td>
+                            <td id="s2">منخفضة (Low)</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td>School Track</td>
+                            <td>Flutter + Cloud + AI</td>
+                            <td id="s3">عالية جداً (Very High)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="why" class="bg-[#020617]/50 rounded-[40px] my-10 backdrop-blur-sm">
+        <div class="grid-container">
+            <div class="card border-red-500/20" data-aos="fade-up">
+                <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                <h2 id="wTitle1" class="text-2xl font-bold mb-4">التحديات المعاصرة</h2>
+                <p id="wDesc1" class="text-gray-400 text-sm">يواجه قطاع التعليم صعوبات جمة تتمثل في ضياع البيانات الورقية، وبطء وصول التقارير الأكاديمية لأولياء الأمور، مما يؤدي إلى تأخر التدخل التربوي في حالات تعثر الطلاب الأكاديمية أو السلوكية.</p>
+            </div>
+            <div class="card border-sky-500/20" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-rocket text-sky-400 text-4xl mb-4"></i>
+                <h2 id="wTitle2" class="text-2xl font-bold mb-4">رؤية الحل الذكي</h2>
+                <p id="wDesc2" class="text-gray-400 text-sm">يقدم School Track نظاماً سحابياً مركزياً يتيح الشفافية المطلقة عبر متابعة حية ومباشرة. من الإشعارات اللحظية للغياب إلى التقارير التحليلية لمستوى الدرجات، نحن نحول المدرسة إلى مؤسسة ذكية تعمل بكفاءة عالية على مدار الساعة.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="roles">
+        <div class="section-title" data-aos="fade-up">
+            <h2 id="rolesTitle">عالم من الإمكانيات المتكاملة</h2>
+        </div>
+        <div class="grid-container">
+            <div class="card" data-aos="fade-up">
+                <i class="fas fa-building-columns text-sky-400 text-3xl mb-4"></i>
+                <h4 id="r1T" class="font-bold text-xl mb-2">الإدارة الشاملة</h4>
+                <p id="r1D" class="text-sm text-gray-500">إدارة ملفات الطلاب والموظفين، جدولة الحصص، وأرشفة السجلات المالية والإدارية بدقة متناهية مع نظام صلاحيات محكم.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-chalkboard-user text-indigo-400 text-3xl mb-4"></i>
+                <h4 id="r2T" class="font-bold text-xl mb-2">المعلم المبدع</h4>
+                <p id="r2D" class="text-sm text-gray-500">توفير أدوات تقنية لرصد الدرجات، تسجيل الحضور إلكترونياً، ومشاركة الملاحظات السلوكية الفورية لكل طالب بفعالية.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-user-graduate text-purple-400 text-3xl mb-4"></i>
+                <h4 id="r3T" class="font-bold text-xl mb-2">الطالب الطموح</h4>
+                <p id="r3D" class="text-sm text-gray-500">منصة خاصة للاطلاع على النتائج، الواجبات المنزلية، وتلقي التنبيهات حول الفعاليات المدرسية والأنشطة المختلفة.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-users-viewfinder text-pink-400 text-3xl mb-4"></i>
+                <h4 id="r4T" class="font-bold text-xl mb-2">ولي الأمر المتصل</h4>
+                <p id="r4D" class="text-sm text-gray-500">تمكين الوالدين من متابعة مسار أبنائهم الأكاديمي أولاً بأول، مع إمكانية التواصل المباشر مع الكادر التعليمي لضمان النجاح.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="section-title" data-aos="fade-up">
+            <h2 id="teamTitle">فريق التطوير</h2>
+            <p class="text-sky-400 font-bold">Graduation Project – Dept. of IT (2025)</p>
+        </div>
+        <div class="grid-container">
+            <div class="card" data-aos="zoom-in">
+                <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
+                <h4 class="font-bold">Alaa Ahmed Al‑Sayani</h4>
+                <span class="text-xs text-gray-500">202210101229</span>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
+                <h4 class="font-bold">Mohammed Khalid Al‑Twile</h4>
+                <span class="text-xs text-gray-500">202110100520</span>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
+                <h4 class="font-bold">Mohammed Labib Al‑Selwi</h4>
+                <span class="text-xs text-gray-500">202210100710</span>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="300">
+                <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
+                <h4 class="font-bold">Moatasem Mutahar Jobarah</h4>
+                <span class="text-xs text-gray-500">202210100731</span>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="400">
+                <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
+                <h4 class="font-bold">Abdul Qadir Jamil Al‑Daais</h4>
+                <span class="text-xs text-gray-500">202210100082</span>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="500">
+                <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
+                <h4 class="font-bold">Husam Mohammed Ghanem</h4>
+                <span class="text-xs text-gray-500">202210100719</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="supervision" class="bg-[#1e293b]/30 rounded-[40px] backdrop-blur-sm">
+        <div class="section-title"><h2>الإشراف العلمي</h2></div>
+        <div class="grid-container">
+            <div class="card" data-aos="fade-right">
+                <i class="fa-solid fa-user-tie text-sky-400 text-3xl mb-4"></i>
+                <h4 class="font-bold text-xl">د. صالح الرياشي</h4>
+                <p class="text-sm text-gray-400">المشرف الرئيسي للمشروع</p>
+            </div>
+            <div class="card" data-aos="fade-left">
+                <i class="fa-solid fa-user-shield text-sky-400 text-3xl mb-4"></i>
+                <h4 class="font-bold text-xl">د. براءة</h4>
+                <p class="text-sm text-gray-400">المشرف المساعد للمشروع</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-10 border-t border-white/5 bg-[#020617]">
+        <div class="flex justify-center gap-6 mb-6 text-xl">
+            <i class="fab fa-facebook hover:text-sky-400 cursor-pointer transition-colors"></i>
+            <i class="fab fa-instagram hover:text-sky-400 cursor-pointer transition-colors"></i>
+            <i class="fas fa-envelope hover:text-sky-400 cursor-pointer transition-colors"></i>
+        </div>
+        <p class="text-gray-500 text-xs px-4">© 2026 SCHOOL TRACK | Smart Educational Revolution - IT Department</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: false, mirror: true });
-
-        window.onload = () => { 
-            document.getElementById('welcomeModal').style.display = 'flex'; 
-        };
+        AOS.init({ duration: 1000, once: true });
         
+        window.onload = () => { 
+            const modal = document.getElementById('welcomeModal');
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.style.opacity = '1'; }, 50);
+        };
+
         function closeModal() {
-            document.getElementById('welcomeModal').style.opacity = '0';
-            setTimeout(() => { document.getElementById('welcomeModal').style.display = 'none'; }, 500);
+            const modal = document.getElementById('welcomeModal');
+            modal.style.opacity = '0';
+            setTimeout(() => { modal.style.display = 'none'; }, 500);
         }
 
         const data = {
             ar: {
-                lang: "EN", mTitle: "مرحباً بك في المستقبل", mDesc: "نظام School Track ليس مجرد تطبيق، بل هو شريكك الذكي لبناء غدٍ تعليمي أفضل.",
+                lang: "EN", mTitle: "مرحباً بك في المستقبل", mDesc: "نظام School Track هو شريكك الذكي لبناء غدٍ تعليمي أفضل وتجسير الفجوة بين المدرسة والمنزل.",
                 hTitle: "مسار المدرسة<br><span class='text-gradient'>School Track</span>",
-                hSlogan: "بوابتكم الذكية لمستقبل تعليمي رقمي متكامل.",
-                aFull: "\"مسار المدرسة\" هو منصة رقمية مبتكرة تهدف إلى رقمنة الإدارة المدرسية في اليمن، عبر تحويل العمليات اليدوية التقليدية إلى نظام ذكي يربط المدرسة والمدرس وولي الأمر في بيئة واحدة متقدمة وآمنة.",
-                wTitle1: "التحديات الحالية", wDesc1: "نعاني من صعوبة وصول أولياء الأمور للمعلومات في الوقت المناسب، فجوة كبيرة في التواصل، وتراكم السجلات الورقية الذي يؤدي للأخطاء البشرية وفقدان البيانات الهامة.",
-                wTitle2: "حلولنا الذكية", wDesc2: "نوفر نظاماً سحابياً مركزياً يتيح الشفافية المطلقة والتواصل اللحظي عبر الإشعارات، مما يحول المدرسة إلى مؤسسة ذكية تدار إلكترونياً بالكامل وبكفاءة تفوق الأنظمة التقليدية.",
-                rolesTitle: "عالم من الإمكانيات",
-                r1T: "إدارة المدرسة", r1D: "تحكم كامل في القبول والتسجيل، استخراج التقارير المالية والإحصائية المعقدة، ومتابعة أداء الطاقم التعليمي بضغطة زر واحدة ومن أي مكان.",
-                r2T: "المعلم", r2D: "رصد آلي للدرجات، تحضير الدروس والخطط رقمياً، وإدارة الغياب اليومي والحصص دون الحاجة لاستخدام الأوراق والملفات التقليدية.",
-                r3T: "الطالب", r3D: "الوصول الفوري للواجبات والنتائج، جدول الحصص اليومي، وتقييم الأداء الشخصي بشكل تفاعلي يساعد على رفع المستوى الدراسي.",
-                r4T: "ولي الأمر", r4D: "مراقبة دقيقة لمستقبل الأبناء، تواصل مباشر مع المعلمين، وتلقي إشعارات فورية عن الغياب أو السلوك أو النتائج الدورية.",
+                hSlogan: "\"نحو بيئة تعليمية ذكية، مترابطة، وآمنة تعزز من كفاءة الأجيال القادمة وتدعم مسيرة التحول الرقمي.\"",
+                aFull: "يعتبر نظام \"مسار المدرسة\" حلاً تقنياً متكاملاً صُمم خصيصاً لمواجهة التحديات الإدارية والتربوية في المدارس الحديثة. لا يقتصر النظام على أتمتة البيانات فحسب، بل يعمل كجسر تواصل تفاعلي يضمن تدفق المعلومات بدقة وشفافية بين جميع أطراف العملية التعليمية.",
+                techTitle: "التقنيات والهيكلية",
+                t1: "تطبيق هاتف محمول متعدد الأنظمة (Cross-platform).",
+                t2: "إدارة وتخزين البيانات بكفاءة وموثوقية عالية.",
+                t3: "بنية تحتية استضافية سحابية آمنة وقابلة للتوسع.",
+                t4: "تشفير AES-256 ونظام تحكم في الصلاحيات (RBAC).",
+                compTitle: "مقارنة الأنظمة التعليمية",
+                c1: "النظام", c2: "التقنية", c3: "الملائمة",
+                s1: "عالية", s2: "منخفضة", s3: "عالية جداً",
+                wTitle1: "التحديات المعاصرة", wDesc1: "يواجه قطاع التعليم صعوبات جمة تتمثل في ضياع البيانات الورقية، وبطء وصول التقارير الأكاديمية لأولياء الأمور.",
+                wTitle2: "رؤية الحل الذكي", wDesc2: "يقدم School Track نظاماً سحابياً مركزياً يتيح الشفافية المطلقة عبر متابعة حية ومباشرة.",
+                rolesTitle: "عالم من الإمكانيات المتكاملة",
+                r1T: "الإدارة الشاملة", r1D: "إدارة ملفات الطلاب والموظفين، جدولة الحصص، وأرشفة السجلات المالية.",
+                r2T: "المعلم المبدع", r2D: "توفير أدوات تقنية لرصد الدرجات، تسجيل الحضور إلكترونياً، والملاحظات السلوكية.",
+                r3T: "الطالب الطموح", r3D: "منصة خاصة للاطلاع على النتائج، الواجبات المنزلية، وتلقي التنبيهات.",
+                r4T: "ولي الأمر المتصل", r4D: "تمكين الوالدين من متابعة مسار أبنائهم الأكاديمي أولاً بأول.",
                 teamTitle: "فريق التطوير"
             },
             en: {
-                lang: "AR", mTitle: "Welcome to Future", mDesc: "School Track is not just an app, it's your smart partner for a better educational tomorrow.",
+                lang: "AR", mTitle: "Welcome to Future", mDesc: "School Track is your smart partner for a better educational tomorrow and bridging the gap.",
                 hTitle: "School Track<br><span class='text-gradient'>Digital Pathway</span>",
-                hSlogan: "Your smart gateway to a fully integrated digital educational future.",
-                aFull: "School Track is an innovative platform aimed at digitizing school management in Yemen, connecting everyone in a secure cloud environment.",
-                wTitle1: "Current Challenges", wDesc1: "Difficulty for parents to access info, communication gaps, and paper burdens causing errors and data loss.",
-                wTitle2: "Smart Solutions", wDesc2: "A central cloud system providing transparency and real-time alerts, transforming schools into 100% digital smart institutions.",
+                hSlogan: "\"Towards a smart, connected, and secure educational environment for future generations.\"",
+                aFull: "School Track is a comprehensive tech solution designed to meet modern administrative and educational challenges. It acts as an interactive bridge for information flow.",
+                techTitle: "Architecture & Technologies",
+                t1: "Cross-platform mobile app (Flutter).",
+                t2: "MySQL: Database management and storage.",
+                t3: "Cloud: Scalable & secure hosting infrastructure.",
+                t4: "Security: AES-256 encryption & role-based access control.",
+                compTitle: "Systems Comparison",
+                c1: "System", c2: "Technology", c3: "Suitability",
+                s1: "High", s2: "Low", s3: "Very High",
+                wTitle1: "Modern Challenges", wDesc1: "Education sectors face paper data loss and slow report delivery, leading to delayed interventions.",
+                wTitle2: "Smart Vision", wDesc2: "We provide a central cloud system for absolute transparency and real-time monitoring.",
                 rolesTitle: "World of Possibilities",
-                r1T: "Management", r1D: "Full control over registration, financial/statistical reports, and staff tracking with one click from anywhere.",
-                r2T: "Teacher", r2D: "Automated grading, digital lesson planning, and managing attendance without any paper files.",
-                r3T: "Student", r3D: "Instant access to grades, homework, daily schedules, and interactive performance tracking.",
-                r4T: "Parent", r4D: "Accurate monitoring of children's progress, direct teacher contact, and instant notifications.",
+                r1T: "Global Management", r1D: "Managing student files, scheduling, and archiving records with precision.",
+                r2T: "Creative Teacher", r2D: "Tools for grading, digital attendance, and instant behavioral feedback.",
+                r3T: "Ambitious Student", r3D: "A platform for viewing results, homework, and event notifications.",
+                r4T: "Connected Parent", r4D: "Empowering parents to track progress and communicate with staff.",
                 teamTitle: "Development Team"
             }
         };
@@ -360,6 +432,23 @@
             document.getElementById('hTitle').innerHTML = data[lang].hTitle;
             document.getElementById('hSlogan').innerText = data[lang].hSlogan;
             document.getElementById('aFull').innerText = data[lang].aFull;
+            
+            // تحديث نصوص التقنيات
+            document.getElementById('techTitle').innerText = data[lang].techTitle;
+            document.getElementById('t1').innerText = data[lang].t1;
+            document.getElementById('t2').innerText = data[lang].t2;
+            document.getElementById('t3').innerText = data[lang].t3;
+            document.getElementById('t4').innerText = data[lang].t4;
+
+            // تحديث نصوص المقارنة
+            document.getElementById('compTitle').innerText = data[lang].compTitle;
+            document.getElementById('c1').innerText = data[lang].c1;
+            document.getElementById('c2').innerText = data[lang].c2;
+            document.getElementById('c3').innerText = data[lang].c3;
+            document.getElementById('s1').innerText = data[lang].s1;
+            document.getElementById('s2').innerText = data[lang].s2;
+            document.getElementById('s3').innerText = data[lang].s3;
+
             document.getElementById('wTitle1').innerText = data[lang].wTitle1;
             document.getElementById('wDesc1').innerText = data[lang].wDesc1;
             document.getElementById('wTitle2').innerText = data[lang].wTitle2;
