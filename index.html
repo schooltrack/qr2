@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <title>School Track | تجربة تعليمية ثورية</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,13 +13,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
 
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
+        /* إعدادات تصفير لضمان عدم تداخل خواص GitHub CSS الافتراضية */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: #0f172a;
             color: #e5e7eb;
             line-height: 1.8;
-            overflow-x: hidden;
+            overflow-x: hidden; /* منع التمرير الأفقي تماماً */
+            width: 100%;
+            -webkit-text-size-adjust: 100%; /* منع أيفون من تغيير حجم الخط */
         }
 
         /* انميشن الخلفية المتحركة */
@@ -44,7 +55,7 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            padding: 40px 20px;
+            padding: 100px 20px 40px 20px; /* زيادة التباعد العلوي عشان الناف بار */
         }
 
         .text-gradient {
@@ -69,17 +80,18 @@
             border: 1px solid rgba(56, 189, 248, 0.1);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
+            height: 100%; /* ضمان تساوي الطول */
         }
         
         .card:hover { 
-            transform: translateY(-15px) scale(1.02); 
+            transform: translateY(-10px); 
             border-color: #38bdf8;
             box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3);
         }
 
         .btn-glow {
             background: #38bdf8;
-            color: #020617;
+            color: #020617 !important;
             padding: 12px 35px;
             border-radius: 50px;
             font-weight: 900;
@@ -105,7 +117,7 @@
         }
 
         .team-img-placeholder {
-            width: 90px; height: 90px;
+            width: 80px; height: 80px;
             border-radius: 50%;
             border: 3px solid #38bdf8;
             margin: 0 auto 15px;
@@ -117,22 +129,29 @@
         }
         .card:hover .team-img-placeholder { transform: rotateY(360deg); }
 
-        section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; width: 100%; }
         .section-title { text-align: center; margin-bottom: 50px; }
-        .section-title h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 10px; color: #fff; }
+        .section-title h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 900; margin-bottom: 10px; color: #fff; }
 
-        /* تنسيق الجداول */
-        .custom-table-container { overflow-x: auto; margin-top: 20px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.1); }
-        table { width: 100%; border-collapse: collapse; background: rgba(2, 6, 23, 0.5); }
+        /* تعديلات الجداول لتعمل 100% على الموبايل */
+        .custom-table-container { 
+            width: 100%;
+            overflow-x: auto; 
+            margin-top: 20px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            -webkit-overflow-scrolling: touch; /* تمرير ناعم على أيفون */
+        }
+        table { min-width: 600px; width: 100%; border-collapse: collapse; background: rgba(2, 6, 23, 0.5); }
         th, td { padding: 15px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         th { background: rgba(56, 189, 248, 0.1); color: #38bdf8; font-weight: bold; }
-        tr:last-child td { border: none; }
         .highlight { color: #38bdf8; font-weight: 900; }
 
+        /* إصلاح الهيدر في الموبايل */
         @media (max-width: 768px) {
-            .section-title h2 { font-size: 1.8rem; }
-            section { padding: 50px 20px; }
-            header h1 { font-size: 2.2rem !important; }
+            header h1 { font-size: 2.2rem !important; line-height: 1.2; }
+            section { padding: 60px 15px; }
+            .blob { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -144,28 +163,28 @@
     </div>
 
     <div id="welcomeModal">
-        <div class="card max-w-md mx-4" style="background: #1e293b;">
-            <img src="logo1.jpg" class="w-20 h-20 mx-auto mb-6 rounded-full border-2 border-sky-400">
+        <div class="card max-w-md mx-4" style="background: #1e293b; height: auto;">
+            <img src="logo1.jpg" class="w-20 h-20 mx-auto mb-6 rounded-full border-2 border-sky-400 object-cover">
             <h2 id="mTitle" class="text-2xl font-black mb-4">مرحباً بك في المستقبل</h2>
             <p id="mDesc" class="text-gray-400 mb-8">نظام School Track هو شريكك الذكي لبناء غدٍ تعليمي أفضل وتجسير الفجوة بين المدرسة والمنزل.</p>
             <button onclick="closeModal()" class="btn-glow w-full">استكشف النظام</button>
         </div>
     </div>
 
-    <nav class="fixed top-0 left-0 w-full z-[100] bg-[#0f172a]/80 backdrop-blur-md border-b border-white/5 p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+    <nav class="fixed top-0 left-0 w-full z-[100] bg-[#0f172a]/90 backdrop-blur-md border-b border-white/5 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-2">
             <div class="flex items-center gap-3">
-                <img src="logo1.jpg" class="w-10 h-10 rounded-lg">
-                <span class="font-black text-xl tracking-tighter">SCHOOL <span class="text-sky-400">TRACK</span></span>
+                <img src="logo1.jpg" class="w-10 h-10 rounded-lg object-cover">
+                <span class="font-black text-lg md:text-xl tracking-tighter">SCHOOL <span class="text-sky-400">TRACK</span></span>
             </div>
-            <button onclick="toggleLang()" id="langBtn" class="bg-sky-500/10 px-4 py-1 rounded-full text-xs font-bold border border-sky-500/20">EN</button>
+            <button onclick="toggleLang()" id="langBtn" class="bg-sky-500/10 px-4 py-1 rounded-full text-xs font-bold border border-sky-500/20 text-sky-400">EN</button>
         </div>
     </nav>
 
     <header>
-        <div data-aos="zoom-out" class="px-4">
+        <div data-aos="zoom-out" class="max-w-4xl mx-auto">
             <h1 id="hTitle" class="text-4xl md:text-7xl font-black mb-6">مسار المدرسة<br><span class="text-gradient">School Track</span></h1>
-            <p id="hSlogan" class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 italic">"نحو بيئة تعليمية ذكية، مترابطة، وآمنة تعزز من كفاءة الأجيال القادمة وتدعم مسيرة التحول الرقمي."</p>
+            <p id="hSlogan" class="text-base md:text-xl text-gray-400 mb-10 italic">"نحو بيئة تعليمية ذكية، مترابطة، وآمنة تعزز من كفاءة الأجيال القادمة وتدعم مسيرة التحول الرقمي."</p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#about" class="btn-glow">تفاصيل المشروع</a>
             </div>
@@ -183,7 +202,7 @@
                 </p>
             </div>
             <div data-aos="fade-left" class="relative">
-                <img src="23.webp" class="rounded-3xl shadow-2xl border border-white/10 w-full h-auto">
+                <img src="23.webp" class="rounded-3xl shadow-2xl border border-white/10 w-full h-auto object-cover" alt="School System">
             </div>
         </div>
     </section>
@@ -220,7 +239,7 @@
         <div class="section-title" data-aos="fade-up">
             <h2 id="compTitle">مقارنة الأنظمة التعليمية</h2>
         </div>
-        <div class="card" data-aos="zoom-in">
+        <div class="card" data-aos="zoom-in" style="padding: 10px;">
             <div class="custom-table-container">
                 <table>
                     <thead>
@@ -252,7 +271,7 @@
         </div>
     </section>
 
-    <section id="why" class="bg-[#020617]/50 rounded-[40px] my-10 backdrop-blur-sm">
+    <section id="why">
         <div class="grid-container">
             <div class="card border-red-500/20" data-aos="fade-up">
                 <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
@@ -303,17 +322,17 @@
         <div class="grid-container">
             <div class="card" data-aos="zoom-in">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Alaa Ahmed Al‑Sayani</h4>
+                <h4 class="font-bold">Alaa Ahmed Al-Sayani</h4>
                 <span class="text-xs text-gray-500">202210101229</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="100">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Mohammed Khalid Al‑Twile</h4>
+                <h4 class="font-bold">Mohammed Khalid Al-Twile</h4>
                 <span class="text-xs text-gray-500">202110100520</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="200">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Mohammed Labib Al‑Selwi</h4>
+                <h4 class="font-bold">Mohammed Labib Al-Selwi</h4>
                 <span class="text-xs text-gray-500">202210100710</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="300">
@@ -323,7 +342,7 @@
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="400">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Abdul Qadir Jamil Al‑Daais</h4>
+                <h4 class="font-bold">Abdul Qadir Jamil Al-Daais</h4>
                 <span class="text-xs text-gray-500">202210100082</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="500">
@@ -334,7 +353,7 @@
         </div>
     </section>
 
-    <section id="supervision" class="bg-[#1e293b]/30 rounded-[40px] backdrop-blur-sm">
+    <section id="supervision" class="bg-[#1e293b]/30 rounded-[40px] backdrop-blur-sm mb-10">
         <div class="section-title"><h2>الإشراف العلمي</h2></div>
         <div class="grid-container">
             <div class="card" data-aos="fade-right">
@@ -361,12 +380,17 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
+        // إعدادات AOS لضمان سلاسة الحركة على الجوال
+        AOS.init({ 
+            duration: 800, 
+            once: true,
+            disable: 'mobile' // اختيارياً يمكن تعطيله في الجوال القديم جداً لزيادة السرعة
+        });
         
         window.onload = () => { 
             const modal = document.getElementById('welcomeModal');
             modal.style.display = 'flex';
-            setTimeout(() => { modal.style.opacity = '1'; }, 50);
+            setTimeout(() => { modal.style.opacity = '1'; }, 100);
         };
 
         function closeModal() {
@@ -433,14 +457,12 @@
             document.getElementById('hSlogan').innerText = data[lang].hSlogan;
             document.getElementById('aFull').innerText = data[lang].aFull;
             
-            // تحديث نصوص التقنيات
             document.getElementById('techTitle').innerText = data[lang].techTitle;
             document.getElementById('t1').innerText = data[lang].t1;
             document.getElementById('t2').innerText = data[lang].t2;
             document.getElementById('t3').innerText = data[lang].t3;
             document.getElementById('t4').innerText = data[lang].t4;
 
-            // تحديث نصوص المقارنة
             document.getElementById('compTitle').innerText = data[lang].compTitle;
             document.getElementById('c1').innerText = data[lang].c1;
             document.getElementById('c2').innerText = data[lang].c2;
