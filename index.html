@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <title>School Track | تجربة تعليمية ثورية</title>
+    <title id="pageTitle">School Track | تجربة تعليمية ثورية</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* إعدادات تصفير لضمان عدم تداخل خواص GitHub CSS الافتراضية */
         * {
             margin: 0;
             padding: 0;
@@ -26,12 +25,11 @@
             background-color: #0f172a;
             color: #e5e7eb;
             line-height: 1.8;
-            overflow-x: hidden; /* منع التمرير الأفقي تماماً */
+            overflow-x: hidden;
             width: 100%;
-            -webkit-text-size-adjust: 100%; /* منع أيفون من تغيير حجم الخط */
+            -webkit-text-size-adjust: 100%;
         }
 
-        /* انميشن الخلفية المتحركة */
         .bg-animate {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
@@ -55,7 +53,7 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            padding: 100px 20px 40px 20px; /* زيادة التباعد العلوي عشان الناف بار */
+            padding: 100px 20px 40px 20px;
         }
 
         .text-gradient {
@@ -80,7 +78,7 @@
             border: 1px solid rgba(56, 189, 248, 0.1);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
-            height: 100%; /* ضمان تساوي الطول */
+            height: 100%;
         }
         
         .card:hover { 
@@ -133,21 +131,19 @@
         .section-title { text-align: center; margin-bottom: 50px; }
         .section-title h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 900; margin-bottom: 10px; color: #fff; }
 
-        /* تعديلات الجداول لتعمل 100% على الموبايل */
         .custom-table-container { 
             width: 100%;
             overflow-x: auto; 
             margin-top: 20px; 
             border-radius: 20px; 
             border: 1px solid rgba(56, 189, 248, 0.1);
-            -webkit-overflow-scrolling: touch; /* تمرير ناعم على أيفون */
+            -webkit-overflow-scrolling: touch;
         }
         table { min-width: 600px; width: 100%; border-collapse: collapse; background: rgba(2, 6, 23, 0.5); }
         th, td { padding: 15px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         th { background: rgba(56, 189, 248, 0.1); color: #38bdf8; font-weight: bold; }
         .highlight { color: #38bdf8; font-weight: 900; }
 
-        /* إصلاح الهيدر في الموبايل */
         @media (max-width: 768px) {
             header h1 { font-size: 2.2rem !important; line-height: 1.2; }
             section { padding: 60px 15px; }
@@ -167,7 +163,7 @@
             <img src="logo1.jpg" class="w-20 h-20 mx-auto mb-6 rounded-full border-2 border-sky-400 object-cover">
             <h2 id="mTitle" class="text-2xl font-black mb-4">مرحباً بك في المستقبل</h2>
             <p id="mDesc" class="text-gray-400 mb-8">نظام School Track هو شريكك الذكي لبناء غدٍ تعليمي أفضل وتجسير الفجوة بين المدرسة والمنزل.</p>
-            <button onclick="closeModal()" class="btn-glow w-full">استكشف النظام</button>
+            <button onclick="closeModal()" id="mBtn" class="btn-glow w-full">استكشف النظام</button>
         </div>
     </div>
 
@@ -186,7 +182,7 @@
             <h1 id="hTitle" class="text-4xl md:text-7xl font-black mb-6">مسار المدرسة<br><span class="text-gradient">School Track</span></h1>
             <p id="hSlogan" class="text-base md:text-xl text-gray-400 mb-10 italic">"نحو بيئة تعليمية ذكية، مترابطة، وآمنة تعزز من كفاءة الأجيال القادمة وتدعم مسيرة التحول الرقمي."</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="#about" class="btn-glow">تفاصيل المشروع</a>
+                <a href="#about" id="hBtn" class="btn-glow">تفاصيل المشروع</a>
             </div>
         </div>
     </header>
@@ -195,10 +191,10 @@
         <div class="grid-container items-center gap-12">
             <div data-aos="fade-right">
                 <div class="section-title text-right">
-                    <h2>حول <span>المشروع</span></h2>
+                    <h2 id="aboutTitle">حول <span>المشروع</span></h2>
                 </div>
                 <p id="aFull" class="text-gray-400 text-lg leading-relaxed mb-6 text-justify">
-                    يعتبر نظام "مسار المدرسة" حلاً تقنياً متكاملاً صُمم خصيصاً لمواجهة التحديات الإدارية والتربوية في المدارس الحديثة. لا يقتصر النظام على أتمتة البيانات فحسب، بل يعمل كجسر تواصل تفاعلي يضمن تدفق المعلومات بدقة وشفافية بين جميع أطراف العملية التعليمية. من خلال واجهات سهلة الاستخدام وقاعدة بيانات سحابية متينة، يوفر النظام بيئة عمل ذكية تقلل من الاعتماد على الأوراق وتزيد من سرعة اتخاذ القرار المبني على تحليل البيانات الحقيقي.
+                    يعتبر نظام "مسار المدرسة" حلاً تقنياً متكاملاً صُمم خصيصاً لمواجهة التحديات الإدارية والتربوية في المدارس الحديثة. لا يقتصر النظام على أتمتة البيانات فحسب، بل يعمل كجسر تواصل تفاعلي يضمن تدفق المعلومات بدقة وشفافية بين جميع أطراف العملية التعليمية.
                 </p>
             </div>
             <div data-aos="fade-left" class="relative">
@@ -276,12 +272,12 @@
             <div class="card border-red-500/20" data-aos="fade-up">
                 <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
                 <h2 id="wTitle1" class="text-2xl font-bold mb-4">التحديات المعاصرة</h2>
-                <p id="wDesc1" class="text-gray-400 text-sm">يواجه قطاع التعليم صعوبات جمة تتمثل في ضياع البيانات الورقية، وبطء وصول التقارير الأكاديمية لأولياء الأمور، مما يؤدي إلى تأخر التدخل التربوي في حالات تعثر الطلاب الأكاديمية أو السلوكية.</p>
+                <p id="wDesc1" class="text-gray-400 text-sm">يواجه قطاع التعليم صعوبات جمة تتمثل في ضياع البيانات الورقية، وبطء وصول التقارير الأكاديمية لأولياء الأمور.</p>
             </div>
             <div class="card border-sky-500/20" data-aos="fade-up" data-aos-delay="100">
                 <i class="fas fa-rocket text-sky-400 text-4xl mb-4"></i>
                 <h2 id="wTitle2" class="text-2xl font-bold mb-4">رؤية الحل الذكي</h2>
-                <p id="wDesc2" class="text-gray-400 text-sm">يقدم School Track نظاماً سحابياً مركزياً يتيح الشفافية المطلقة عبر متابعة حية ومباشرة. من الإشعارات اللحظية للغياب إلى التقارير التحليلية لمستوى الدرجات، نحن نحول المدرسة إلى مؤسسة ذكية تعمل بكفاءة عالية على مدار الساعة.</p>
+                <p id="wDesc2" class="text-gray-400 text-sm">يقدم School Track نظاماً سحابياً مركزياً يتيح الشفافية المطلقة عبر متابعة حية ومباشرة.</p>
             </div>
         </div>
     </section>
@@ -294,22 +290,22 @@
             <div class="card" data-aos="fade-up">
                 <i class="fas fa-building-columns text-sky-400 text-3xl mb-4"></i>
                 <h4 id="r1T" class="font-bold text-xl mb-2">الإدارة الشاملة</h4>
-                <p id="r1D" class="text-sm text-gray-500">إدارة ملفات الطلاب والموظفين، جدولة الحصص، وأرشفة السجلات المالية والإدارية بدقة متناهية مع نظام صلاحيات محكم.</p>
+                <p id="r1D" class="text-sm text-gray-500">إدارة ملفات الطلاب والموظفين، جدولة الحصص، وأرشفة السجلات المالية.</p>
             </div>
             <div class="card" data-aos="fade-up" data-aos-delay="100">
                 <i class="fas fa-chalkboard-user text-indigo-400 text-3xl mb-4"></i>
                 <h4 id="r2T" class="font-bold text-xl mb-2">المعلم المبدع</h4>
-                <p id="r2D" class="text-sm text-gray-500">توفير أدوات تقنية لرصد الدرجات، تسجيل الحضور إلكترونياً، ومشاركة الملاحظات السلوكية الفورية لكل طالب بفعالية.</p>
+                <p id="r2D" class="text-sm text-gray-500">توفير أدوات تقنية لرصد الدرجات، تسجيل الحضور إلكترونياً.</p>
             </div>
             <div class="card" data-aos="fade-up" data-aos-delay="200">
                 <i class="fas fa-user-graduate text-purple-400 text-3xl mb-4"></i>
                 <h4 id="r3T" class="font-bold text-xl mb-2">الطالب الطموح</h4>
-                <p id="r3D" class="text-sm text-gray-500">منصة خاصة للاطلاع على النتائج، الواجبات المنزلية، وتلقي التنبيهات حول الفعاليات المدرسية والأنشطة المختلفة.</p>
+                <p id="r3D" class="text-sm text-gray-500">منصة خاصة للاطلاع على النتائج، الواجبات المنزلية.</p>
             </div>
             <div class="card" data-aos="fade-up" data-aos-delay="300">
                 <i class="fas fa-users-viewfinder text-pink-400 text-3xl mb-4"></i>
                 <h4 id="r4T" class="font-bold text-xl mb-2">ولي الأمر المتصل</h4>
-                <p id="r4D" class="text-sm text-gray-500">تمكين الوالدين من متابعة مسار أبنائهم الأكاديمي أولاً بأول، مع إمكانية التواصل المباشر مع الكادر التعليمي لضمان النجاح.</p>
+                <p id="r4D" class="text-sm text-gray-500">تمكين الوالدين من متابعة مسار أبنائهم الأكاديمي أولاً بأول.</p>
             </div>
         </div>
     </section>
@@ -317,54 +313,54 @@
     <section id="team">
         <div class="section-title" data-aos="fade-up">
             <h2 id="teamTitle">فريق التطوير</h2>
-            <p class="text-sky-400 font-bold">Graduation Project – Dept. of IT (2025)</p>
+            <p id="teamSubtitle" class="text-sky-400 font-bold">مشروع تخرج - قسم تقنية المعلومات (2025)</p>
         </div>
-        <div class="grid-container">
+        <div class="grid-container" id="teamGrid">
             <div class="card" data-aos="zoom-in">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Alaa Ahmed Al-Sayani</h4>
+                <h4 class="font-bold" id="tm1">علاء احمد السياني</h4>
                 <span class="text-xs text-gray-500">202210101229</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="100">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Mohammed Khalid Al-Twile</h4>
+                <h4 class="font-bold" id="tm2">محمد خالد الطويلي</h4>
                 <span class="text-xs text-gray-500">202110100520</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="200">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Mohammed Labib Al-Selwi</h4>
+                <h4 class="font-bold" id="tm3">محمد لبيب الصلوي</h4>
                 <span class="text-xs text-gray-500">202210100710</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="300">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Moatasem Mutahar Jobarah</h4>
+                <h4 class="font-bold" id="tm4">معتصم مطهر جباره</h4>
                 <span class="text-xs text-gray-500">202210100731</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="400">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Abdul Qadir Jamil Al-Daais</h4>
+                <h4 class="font-bold" id="tm5">عبدالقادر جميل الدعيس</h4>
                 <span class="text-xs text-gray-500">202210100082</span>
             </div>
             <div class="card" data-aos="zoom-in" data-aos-delay="500">
                 <div class="team-img-placeholder"><i class="fa-solid fa-user text-3xl text-sky-400"></i></div>
-                <h4 class="font-bold">Husam Mohammed Ghanem</h4>
+                <h4 class="font-bold" id="tm6">حسام محمد غانم</h4>
                 <span class="text-xs text-gray-500">202210100719</span>
             </div>
         </div>
     </section>
 
     <section id="supervision" class="bg-[#1e293b]/30 rounded-[40px] backdrop-blur-sm mb-10">
-        <div class="section-title"><h2>الإشراف العلمي</h2></div>
+        <div class="section-title"><h2 id="supTitle">الإشراف العلمي</h2></div>
         <div class="grid-container">
             <div class="card" data-aos="fade-right">
                 <i class="fa-solid fa-user-tie text-sky-400 text-3xl mb-4"></i>
-                <h4 class="font-bold text-xl">د. صالح الرياشي</h4>
-                <p class="text-sm text-gray-400">المشرف الرئيسي للمشروع</p>
+                <h4 class="font-bold text-xl" id="supName1">د. صالح الرياشي</h4>
+                <p class="text-sm text-gray-400" id="supRole1">المشرف الرئيسي للمشروع</p>
             </div>
             <div class="card" data-aos="fade-left">
                 <i class="fa-solid fa-user-shield text-sky-400 text-3xl mb-4"></i>
-                <h4 class="font-bold text-xl">د. براءة</h4>
-                <p class="text-sm text-gray-400">المشرف المساعد للمشروع</p>
+                <h4 class="font-bold text-xl" id="supName2">د. براءة</h4>
+                <p class="text-sm text-gray-400" id="supRole2">المشرف المساعد للمشروع</p>
             </div>
         </div>
     </section>
@@ -375,17 +371,12 @@
             <i class="fab fa-instagram hover:text-sky-400 cursor-pointer transition-colors"></i>
             <i class="fas fa-envelope hover:text-sky-400 cursor-pointer transition-colors"></i>
         </div>
-        <p class="text-gray-500 text-xs px-4">© 2026 SCHOOL TRACK | Smart Educational Revolution - IT Department</p>
+        <p id="footerText" class="text-gray-500 text-xs px-4">© 2026 SCHOOL TRACK | ثورة تعليمية ذكية - قسم تقنية المعلومات</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // إعدادات AOS لضمان سلاسة الحركة على الجوال
-        AOS.init({ 
-            duration: 800, 
-            once: true,
-            disable: 'mobile' // اختيارياً يمكن تعطيله في الجوال القديم جداً لزيادة السرعة
-        });
+        AOS.init({ duration: 800, once: true });
         
         window.onload = () => { 
             const modal = document.getElementById('welcomeModal');
@@ -401,9 +392,15 @@
 
         const data = {
             ar: {
-                lang: "EN", mTitle: "مرحباً بك في المستقبل", mDesc: "نظام School Track هو شريكك الذكي لبناء غدٍ تعليمي أفضل وتجسير الفجوة بين المدرسة والمنزل.",
+                title: "School Track | تجربة تعليمية ثورية",
+                lang: "EN", 
+                mTitle: "مرحباً بك في المستقبل", 
+                mDesc: "نظام School Track هو شريكك الذكي لبناء غدٍ تعليمي أفضل وتجسير الفجوة بين المدرسة والمنزل.",
+                mBtn: "استكشف النظام",
                 hTitle: "مسار المدرسة<br><span class='text-gradient'>School Track</span>",
                 hSlogan: "\"نحو بيئة تعليمية ذكية، مترابطة، وآمنة تعزز من كفاءة الأجيال القادمة وتدعم مسيرة التحول الرقمي.\"",
+                hBtn: "تفاصيل المشروع",
+                aboutTitle: "حول <span>المشروع</span>",
                 aFull: "يعتبر نظام \"مسار المدرسة\" حلاً تقنياً متكاملاً صُمم خصيصاً لمواجهة التحديات الإدارية والتربوية في المدارس الحديثة. لا يقتصر النظام على أتمتة البيانات فحسب، بل يعمل كجسر تواصل تفاعلي يضمن تدفق المعلومات بدقة وشفافية بين جميع أطراف العملية التعليمية.",
                 techTitle: "التقنيات والهيكلية",
                 t1: "تطبيق هاتف محمول متعدد الأنظمة (Cross-platform).",
@@ -411,58 +408,97 @@
                 t3: "بنية تحتية استضافية سحابية آمنة وقابلة للتوسع.",
                 t4: "تشفير AES-256 ونظام تحكم في الصلاحيات (RBAC).",
                 compTitle: "مقارنة الأنظمة التعليمية",
-                c1: "النظام", c2: "التقنية", c3: "الملائمة",
-                s1: "عالية", s2: "منخفضة", s3: "عالية جداً",
-                wTitle1: "التحديات المعاصرة", wDesc1: "يواجه قطاع التعليم صعوبات جمة تتمثل في ضياع البيانات الورقية، وبطء وصول التقارير الأكاديمية لأولياء الأمور.",
-                wTitle2: "رؤية الحل الذكي", wDesc2: "يقدم School Track نظاماً سحابياً مركزياً يتيح الشفافية المطلقة عبر متابعة حية ومباشرة.",
+                c1: "النظام (System)", c2: "التقنية (Technology)", c3: "الملائمة (Suitability)",
+                s1: "عالية (High)", s2: "منخفضة (Low)", s3: "عالية جداً (Very High)",
+                wTitle1: "التحديات المعاصرة", 
+                wDesc1: "يواجه قطاع التعليم صعوبات جمة تتمثل في ضياع البيانات الورقية، وبطء وصول التقارير الأكاديمية لأولياء الأمور.",
+                wTitle2: "رؤية الحل الذكي", 
+                wDesc2: "يقدم School Track نظاماً سحابياً مركزياً يتيح الشفافية المطلقة عبر متابعة حية ومباشرة.",
                 rolesTitle: "عالم من الإمكانيات المتكاملة",
                 r1T: "الإدارة الشاملة", r1D: "إدارة ملفات الطلاب والموظفين، جدولة الحصص، وأرشفة السجلات المالية.",
                 r2T: "المعلم المبدع", r2D: "توفير أدوات تقنية لرصد الدرجات، تسجيل الحضور إلكترونياً، والملاحظات السلوكية.",
                 r3T: "الطالب الطموح", r3D: "منصة خاصة للاطلاع على النتائج، الواجبات المنزلية، وتلقي التنبيهات.",
                 r4T: "ولي الأمر المتصل", r4D: "تمكين الوالدين من متابعة مسار أبنائهم الأكاديمي أولاً بأول.",
-                teamTitle: "فريق التطوير"
+                teamTitle: "فريق التطوير",
+                teamSubtitle: "مشروع تخرج - قسم تقنية المعلومات (2025)",
+                tm1: "علاء احمد السياني", tm2: "محمد خالد الطويلي", tm3: "محمد لبيب الصلوي", 
+                tm4: "معتصم مطهر جباره", tm5: "عبدالقادر جميل الدعيس", tm6: "حسام محمد غانم",
+                supTitle: "الإشراف العلمي",
+                supName1: "د. صالح الرياشي", supRole1: "المشرف الرئيسي للمشروع",
+                supName2: "د. براءة", supRole2: "المشرف المساعد للمشروع",
+                footerText: "© 2026 SCHOOL TRACK | ثورة تعليمية ذكية - قسم تقنية المعلومات"
             },
             en: {
-                lang: "AR", mTitle: "Welcome to Future", mDesc: "School Track is your smart partner for a better educational tomorrow and bridging the gap.",
+                title: "School Track | Revolutionary Education",
+                lang: "AR", 
+                mTitle: "Welcome to the Future", 
+                mDesc: "School Track is your smart partner for a better educational tomorrow and bridging the gap between school and home.",
+                mBtn: "Explore System",
                 hTitle: "School Track<br><span class='text-gradient'>Digital Pathway</span>",
-                hSlogan: "\"Towards a smart, connected, and secure educational environment for future generations.\"",
-                aFull: "School Track is a comprehensive tech solution designed to meet modern administrative and educational challenges. It acts as an interactive bridge for information flow.",
+                hSlogan: "\"Towards a smart, connected, and secure educational environment that enhances future generations' efficiency.\"",
+                hBtn: "Project Details",
+                aboutTitle: "About the <span>Project</span>",
+                aFull: "School Track is a comprehensive tech solution designed to address administrative and educational challenges. It serves as an interactive bridge ensuring transparent information flow between all parties.",
                 techTitle: "Architecture & Technologies",
-                t1: "Cross-platform mobile app (Flutter).",
-                t2: "MySQL: Database management and storage.",
-                t3: "Cloud: Scalable & secure hosting infrastructure.",
-                t4: "Security: AES-256 encryption & role-based access control.",
+                t1: "Cross-platform mobile application (Flutter).",
+                t2: "Efficient and reliable data management (MySQL).",
+                t3: "Secure and scalable cloud hosting infrastructure.",
+                t4: "AES-256 encryption and Role-Based Access Control (RBAC).",
                 compTitle: "Systems Comparison",
                 c1: "System", c2: "Technology", c3: "Suitability",
                 s1: "High", s2: "Low", s3: "Very High",
-                wTitle1: "Modern Challenges", wDesc1: "Education sectors face paper data loss and slow report delivery, leading to delayed interventions.",
-                wTitle2: "Smart Vision", wDesc2: "We provide a central cloud system for absolute transparency and real-time monitoring.",
-                rolesTitle: "World of Possibilities",
-                r1T: "Global Management", r1D: "Managing student files, scheduling, and archiving records with precision.",
-                r2T: "Creative Teacher", r2D: "Tools for grading, digital attendance, and instant behavioral feedback.",
-                r3T: "Ambitious Student", r3D: "A platform for viewing results, homework, and event notifications.",
-                r4T: "Connected Parent", r4D: "Empowering parents to track progress and communicate with staff.",
-                teamTitle: "Development Team"
+                wTitle1: "Modern Challenges", 
+                wDesc1: "Education sectors face paper data loss and slow report delivery, leading to delayed educational interventions.",
+                wTitle2: "Smart Vision", 
+                wDesc2: "School Track provides a central cloud system for absolute transparency through live and direct monitoring.",
+                rolesTitle: "Integrated Possibilities",
+                r1T: "Global Management", r1D: "Managing students/staff files, scheduling, and archiving records precisely.",
+                r2T: "Creative Teacher", r2D: "Tools for grading, electronic attendance, and instant behavioral feedback.",
+                r3T: "Ambitious Student", r3D: "A platform to view results, homework, and receive activity notifications.",
+                r4T: "Connected Parent", r4D: "Empowering parents to track academic progress and communicate with staff.",
+                teamTitle: "Development Team",
+                teamSubtitle: "Graduation Project - IT Department (2025)",
+                tm1: "Alaa Ahmed Al-Sayani", tm2: "Mohammed Khalid Al-Tawili", tm3: "Mohammed Labib Al-Salwi", 
+                tm4: "Moatasem Motahar Jabarah", tm5: "Abdulqader Jameel Al-Duais", tm6: "Hussam Mohammed Ghanem",
+                supTitle: "Scientific Supervision",
+                supName1: "Dr. Saleh Al-Ryashi", supRole1: "Main Project Supervisor",
+                supName2: "Dr. Bara'a", supRole2: "Assistant Project Supervisor",
+                footerText: "© 2026 SCHOOL TRACK | Smart Educational Revolution - IT Department"
             }
         };
 
         let lang = 'ar';
         function toggleLang() {
             lang = lang === 'ar' ? 'en' : 'ar';
-            document.getElementById('mainHtml').dir = lang === 'ar' ? 'rtl' : 'ltr';
+            const root = document.getElementById('mainHtml');
+            root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            root.lang = lang;
+
+            document.getElementById('pageTitle').innerText = data[lang].title;
             document.getElementById('langBtn').innerText = data[lang].lang;
+            
+            // Modal
             document.getElementById('mTitle').innerText = data[lang].mTitle;
             document.getElementById('mDesc').innerText = data[lang].mDesc;
+            document.getElementById('mBtn').innerText = data[lang].mBtn;
+
+            // Header
             document.getElementById('hTitle').innerHTML = data[lang].hTitle;
             document.getElementById('hSlogan').innerText = data[lang].hSlogan;
+            document.getElementById('hBtn').innerText = data[lang].hBtn;
+
+            // About
+            document.getElementById('aboutTitle').innerHTML = data[lang].aboutTitle;
             document.getElementById('aFull').innerText = data[lang].aFull;
             
+            // Tech
             document.getElementById('techTitle').innerText = data[lang].techTitle;
             document.getElementById('t1').innerText = data[lang].t1;
             document.getElementById('t2').innerText = data[lang].t2;
             document.getElementById('t3').innerText = data[lang].t3;
             document.getElementById('t4').innerText = data[lang].t4;
 
+            // Comparison Table
             document.getElementById('compTitle').innerText = data[lang].compTitle;
             document.getElementById('c1').innerText = data[lang].c1;
             document.getElementById('c2').innerText = data[lang].c2;
@@ -471,10 +507,13 @@
             document.getElementById('s2').innerText = data[lang].s2;
             document.getElementById('s3').innerText = data[lang].s3;
 
+            // Why Us
             document.getElementById('wTitle1').innerText = data[lang].wTitle1;
             document.getElementById('wDesc1').innerText = data[lang].wDesc1;
             document.getElementById('wTitle2').innerText = data[lang].wTitle2;
             document.getElementById('wDesc2').innerText = data[lang].wDesc2;
+
+            // Roles
             document.getElementById('rolesTitle').innerText = data[lang].rolesTitle;
             document.getElementById('r1T').innerText = data[lang].r1T;
             document.getElementById('r1D').innerText = data[lang].r1D;
@@ -484,7 +523,26 @@
             document.getElementById('r3D').innerText = data[lang].r3D;
             document.getElementById('r4T').innerText = data[lang].r4T;
             document.getElementById('r4D').innerText = data[lang].r4D;
+
+            // Team Members
+            document.getElementById('tm1').innerText = data[lang].tm1;
+            document.getElementById('tm2').innerText = data[lang].tm2;
+            document.getElementById('tm3').innerText = data[lang].tm3;
+            document.getElementById('tm4').innerText = data[lang].tm4;
+            document.getElementById('tm5').innerText = data[lang].tm5;
+            document.getElementById('tm6').innerText = data[lang].tm6;
+
+            // Team & Supervision
             document.getElementById('teamTitle').innerText = data[lang].teamTitle;
+            document.getElementById('teamSubtitle').innerText = data[lang].teamSubtitle;
+            document.getElementById('supTitle').innerText = data[lang].supTitle;
+            document.getElementById('supName1').innerText = data[lang].supName1;
+            document.getElementById('supRole1').innerText = data[lang].supRole1;
+            document.getElementById('supName2').innerText = data[lang].supName2;
+            document.getElementById('supRole2').innerText = data[lang].supRole2;
+
+            // Footer
+            document.getElementById('footerText').innerText = data[lang].footerText;
         }
     </script>
 </body>
